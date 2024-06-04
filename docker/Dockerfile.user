@@ -13,7 +13,7 @@ RUN npm install
 COPY . .
 
 # Generate Prisma client
-RUN npm run db:database
+RUN npm run db:generate
 
 # Build the application
 RUN npm run build
