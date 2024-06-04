@@ -1,7 +1,10 @@
 import GoogleProvider from "next-auth/providers/google";
 import db from "@repo/db/client";
+import { AuthOptions } from "next-auth";
+import { User, Account, Profile } from "next-auth";
+import { AdapterUser } from "next-auth/adapters";
 
-export const authOptions = {
+export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -12,16 +15,16 @@ export const authOptions = {
     async signIn({
       user,
       account,
+      profile,
+      email,
+      credentials,
     }: {
-      user: {
-        email: string;
-        name: string;
-      };
-      account: {
-        provider: "google" | "github";
-      };
-    }) {
-      console.log("hi signin");
+      user: User | AdapterUser;
+      account: Account | null;
+      profile?: Profile | undefined;
+      email?: { verificationRequest?: boolean } | undefined;
+      credentials?: Record<string, unknown> | undefined;
+    }): Promise<boolean> {
       if (!user || !user.email) {
         return false;
       }
@@ -36,11 +39,11 @@ export const authOptions = {
         create: {
           email: user.email,
           name: user.name,
-          auth_type: account.provider === "google" ? "Google" : "Github", // Use a prisma type here
+          auth_type: account?.provider === "google" ? "Google" : "Github", // Use a prisma type here
         },
         update: {
           name: user.name,
-          auth_type: account.provider === "google" ? "Google" : "Github", // Use a prisma type here
+          auth_type: account?.provider === "google" ? "Google" : "Github", // Use a prisma type here
         },
       });
 
