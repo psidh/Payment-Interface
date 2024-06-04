@@ -42,9 +42,9 @@ async function getP2pTransactions() {
     },
   });
   console.log("session: ", session);
-  
-  console.log("t : ",tx);
-  
+
+  console.log("t : ", tx);
+
   return tx.map((t) => ({
     timestamp: t.timestamp,
     toUserId: t.toUserId,
@@ -57,7 +57,7 @@ export default async function () {
   const transactions = await getOnRampTransactions();
   const p2pTransactions = await getP2pTransactions();
   console.log("p2p: ", p2pTransactions);
-  
+
   return (
     <div className="">
       <div className="text-4xl text-[#6a51a6] pt-8 mb-8 font-bold">
