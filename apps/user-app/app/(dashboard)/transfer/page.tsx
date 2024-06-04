@@ -26,7 +26,7 @@ async function getOnRampTransactions() {
       userId: Number(session?.user?.id),
     },
   });
-  return tx.map((t) => ({
+  return tx.map((t: any) => ({
     time: t.startTime,
     amount: t.amount,
     status: t.status,
@@ -45,7 +45,7 @@ async function getP2pTransactions() {
 
   console.log("t : ", tx);
 
-  return tx.map((t) => ({
+  return tx.map((t: any) => ({
     timestamp: t.timestamp,
     toUserId: t.toUserId,
     amount: t.amount,
